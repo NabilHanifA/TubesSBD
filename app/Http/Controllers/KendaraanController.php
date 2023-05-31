@@ -14,4 +14,9 @@ class KendaraanController extends Controller
     {
         return view("admin");
     }
+
+    public function lamanlogin()
+    {
+        return view("login");
+    }
 }

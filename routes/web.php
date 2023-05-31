@@ -19,3 +19,4 @@ use App\Http\Controllers\KendaraanController;
 
 Route::get('/', [KendaraanController::class, 'index'])->name('kendaraan');
 Route::get('/admin', [KendaraanController::class, 'admin'])->name('admin');
+Route::get('/login', [KendaraanController::class, 'lamanlogin'])->name('login');
