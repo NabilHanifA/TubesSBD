@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +18,12 @@ use App\Http\Controllers\KendaraanController;
 //     return view('welcome');
 // });
 
-Route::get('/', [KendaraanController::class, 'index'])->name('kendaraan');
+Route::get('/', [HomeController::class, 'index'])->name('user.landing');
+Route::get('/backup', [HomeController::class, 'backup'])->name('user.backup');
+Route::get('/forum', [HomeController::class, 'forum'])->name('user.forum');
+Route::get('/stasiun', [HomeController::class, 'stasiun'])->name('user.stasiun');
+Route::get('/store', [HomeController::class, 'store'])->name('user.store');
+Route::get('/tukar-tambah', [HomeController::class, 'tukarTambah'])->name('user.tukar-tambah');
+
 Route::get('/admin', [KendaraanController::class, 'admin'])->name('admin');
 Route::get('/login', [KendaraanController::class, 'lamanlogin'])->name('login');
