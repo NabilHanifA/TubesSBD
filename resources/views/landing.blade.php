@@ -98,6 +98,142 @@
   </div>
 </section>
 
+<section id="perbandingan" class="about">
+  <div class="container" data-aos="fade-up">
+    <div class="row content text-center mt-5 pt-5">
+      <h3 class="mb-4">Perbandingan <span class="text-warning">Motor Listrik</span> & <span class="text-dark">Motor Konvensional</span></h3>
+      <span>Berikut adalah perbandingan antara motor listrik dan motor konvensional:
+      </span>
+    </div>
+    <div class="row align-items-center justify-content-center mt-3">
+      <div class="col-md-4">
+        <div class="card rounded-lg">
+          <div class="card-body text-center">
+            <img src="{{asset('assets/img/perbandingan-2.jpg')}}" style="height: 260px" class="img-fluid" alt="">
+            <h4>Motor Listrik</h4>
+
+            <div class="card mt-3">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-check text-success bx-md"></i> Harga : Rp 9 jutaan
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-check text-success bx-md"></i> Emisi Karbon (CO2) : 0 - 5 g/km
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-check text-success bx-md"></i> Biaya Bahan Bakar : Rp 1,445/kWh
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-check text-success bx-md"></i> Service : Minim pemeliharaan rutin (mesin tidak melibatkan proses pembakaran)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card rounded-lg">
+          <div class="card-body text-center">
+            <img src="{{asset('assets/img/perbandingan-1.png')}}" style="height: 260px" class="img-fluid" alt="">
+            <h4>Motor Konvensional</h4>
+
+            <div class="card mt-3">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-x text-danger bx-md"></i> Harga : Rp 16 jutaan
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-x text-danger bx-md"></i> Emisi Karbon (CO2) : 125 g/km
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-x text-danger bx-md"></i> Biaya Bahan Bakar : Rp 10000/liter
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body py-2 text-start d-flex align-items-center">
+                <i class="bx bx-x text-danger bx-md"></i> Service : Service rutin (biaya ganti oli, ganti busi, dan rantai motor)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="cta">
+  <div class="container" data-aos="zoom-in">
+
+    <div class="text-center">
+      <h3>Beralih ke kendaraan Listrik?</h3>
+      <p>GoToMotlis memiliki beberapa fitur andalan untuk membantu anda menemukan solusi untuk kendaraan yang sehat dan ramah lingkungan</p>
+      <a class="cta-btn" href="#services">Lihat Selengkapnya</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Services</h2>
+      <p>Check our Services</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bxl-dribbble"></i></div>
+          <h4><a href="">Stasiun Motlis</a></h4>
+          <p>Fitur untuk menemukan stasiun pengisian kendaraan listrik yang tersebar diseluruh Indonesia</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bx-file"></i></div>
+          <h4><a href="">Store Motlis</a></h4>
+          <p>Menyediakan berbagai macam jenis motor listrik untuk anda yang ingin beralih ke kendaraan sehat dan ramah lingkungan</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bx-file"></i></div>
+          <h4><a href="">Forum Motlis</a></h4>
+          <p>Wadah untuk peminat motor listrik untuk saling berdiskusi dan mendapatkan pengetahuan terkait motor listrik</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bx-file"></i></div>
+          <h4><a href="">Tukar Tambah Motlis</a></h4>
+          <p>Wadah untuk peminat motor listrik untuk saling berdiskusi dan mendapatkan pengetahuan terkait motor listrik</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bx-file"></i></div>
+          <h4><a href="">Sewa Motlis</a></h4>
+          <p>Fitur untuk anda yang ingin mencoba serta ingin berkendara menggunakan motor listrik</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 <section id="grafik" class="about">
   <div class="container" data-aos="fade-up">
     <div class="row mt-5 pt-5">
@@ -108,11 +244,6 @@
         <iframe id="iframe-chart" style="height:600px; width:100%; border: none;" src="https://databoks.katadata.co.id/datapublishembed/116354/proyeksi-jumlah-kendaraan-listrik-di-indonesia-hingga-2030"></iframe>
       </div>
     </div>
-
-
   </div>
 </section>
-
-
-
 @endsection
