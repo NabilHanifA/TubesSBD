@@ -29,7 +29,7 @@ Route::get('/tukar-tambah', [HomeController::class, 'tukarTambah'])->name('user.
 
 
 Auth::routes();
-Route::get('/login', [KendaraanController::class, 'lamanlogin'])->name('login');
+// Route::get('/login', [KendaraanController::class, 'lamanlogin'])->name('login');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
