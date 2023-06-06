@@ -29,6 +29,12 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/adminstyle.css" rel="stylesheet">
 
+  <style>
+    body {
+      background: url("../img/motlis-5.jpg");
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: May 30 2023 with Bootstrap v5.3.0
