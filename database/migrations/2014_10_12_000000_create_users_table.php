@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
+
+            $table->foreign('role_id')->references('id')->on('role');
         });
     }
 

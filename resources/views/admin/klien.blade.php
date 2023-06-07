@@ -3,11 +3,11 @@
 
 @section('content')
 <div class="pagetitle">
-  <h1>Galeri</h1>
+  <h1>Klien</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{url('/admin')}}">Dashboard</a></li>
-      <li class="breadcrumb-item active">Galeri</li>
+      <li class="breadcrumb-item active">Klien</li>
     </ol>
   </nav>
 </div><!-- End Page Title -->
@@ -21,7 +21,7 @@
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
           <!--begin::Item-->
           <li class="breadcrumb-item text-muted">
-              <a class="btn btn-success text-white mt-3" onclick="$('#createModal').modal('show');"><i class="fas fa-plus mr-2"></i>Upload Gallery</a>
+              <a class="btn btn-success text-white mt-3" onclick="$('#createModal').modal('show');"><i class="fas fa-plus mr-2"></i>Add Client</a>
           </li>
           <!--end::Item-->
         </ul>
@@ -39,7 +39,6 @@
             <tr>
               <th>No</th>
               <th>Foto</th>
-              <th>Judul</th>
               <th>Deskripsi</th>
               <th style="width: 100px;">Aksi</th>
             </tr>
@@ -58,10 +57,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Unggah Foto Dokumentasi</h5>
+        <h5 class="modal-title" id="createModalLabel">Unggah Foto Klien</h5>
         <button type="button" class="btn" onclick="$('#createModal').modal('hide');" aria-label="Close"><i class="fas fa-times"></i></button>
       </div>
-      <form id="scopeForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.galeri.store') }}" class="form-horizontal">
+      <form id="scopeForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.klien.store') }}" class="form-horizontal">
         <div class="modal-body">
           @csrf
           <div class="form-group">
@@ -70,15 +69,9 @@
               <center><input accept="image/*" type="file" class="form-control" name="img" id="image" required><center>
             </div>
           <div class="form-group mt-6">
-              <label for="nama" class="col-sm-2 control-label">Judul:</label>
+              <label class="col control-label" for="deskripsi">Deskripsi :</label>
               <div class="col-sm-12 mt-2">
-                  <input type="text" required class="form-control" id="judul" name="judul" placeholder="Masukan judul...">
-              </div>
-          </div>
-          <div class="form-group mt-6">
-              <label class="col control-label" for="deskripsi">Deskripsi (Opsional) :</label>
-              <div class="col-sm-12 mt-2">
-                  <textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"></textarea>
+                  <textarea name="deskripsi" id="deskripsi" rows="5" class="form-control" required></textarea>
               </div>
           </div>
         </div>
@@ -95,7 +88,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Foto Dokumentasi</h5>
+        <h5 class="modal-title" id="editModalLabel">Edit Foto Klien</h5>
         <button type="button" class="btn" onclick="$('#editModal').modal('hide');" aria-label="Close"><i class="fas fa-times"></i></button>
       </div>
       <form id="updateForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="" class="form-horizontal">
@@ -108,15 +101,9 @@
                   <center><input accept="image/*" type="file" name="img" id="imageUpdate" class="form-control"><center>
                 </div>
               <div class="form-group">
-                  <label for="nama" class="col-sm-2 control-label">Judul:</label>
+                  <label class="col control-label" for="deskripsi">Deskripsi :</label>
                   <div class="col-sm-12 mt-2">
-                      <input type="text" required class="form-control" id="judulUpdate" name="judul" placeholder="Masukan judul...">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col control-label" for="deskripsi">Deskripsi (Opsional) :</label>
-                  <div class="col-sm-12 mt-2">
-                      <textarea name="deskripsi" id="deskripsiUpdate" rows="5" class="form-control"></textarea>
+                      <textarea name="deskripsi" id="deskripsiUpdate" rows="5" class="form-control" required></textarea>
                   </div>
               </div>
           </div>
@@ -136,13 +123,12 @@
             var table = $('#table-galeri').DataTable({
                 processing  : true,
                 serverSide  : true,
-                ajax        : "{{route('admin.galeri.ajax')}}",
+                ajax        : "{{route('admin.klien.ajax')}}",
                 columns     : [
                     {data   : 'DT_RowIndex', name: 'DT_RowIndex', orderlable: false, searchable: false},
                     {data   : 'img', name: 'img', render: function(data){
-                        return `<a href="{{Storage::url('galeri/`+data+`')}}">`+`<img src="{{Storage::url('galeri/`+data+`')}}" width="100" class="prevImage" />`+`</a>`;
+                        return `<a href="{{Storage::url('klien/`+data+`')}}">`+`<img src="{{Storage::url('klien/`+data+`')}}" width="100" class="prevImage" />`+`</a>`;
                     }},
-                    {data   : 'judul', name: 'judul'},
                     {data   : 'deskripsi', name: 'deskripsi', render: function(data){
                         return (data == null) ? '-' : data.length > 100 ? data.substr(0,100)+'...' : data;
                     }},
@@ -152,12 +138,10 @@
         });
 
         function editModal(id){
-            $.get("{{url('galeri/edit')}}" + "/" +id, function(data){
-                $('#updateForm').attr('action', "{{ url('galeri/update') }}"+"/"+id);
-                $('#prevUpdate').attr('src', "{{Storage::url('galeri')}}" + "/" + data.img);
-                $('#judulUpdate').val(data.judul);
+            $.get("{{url('klien/edit')}}" + "/" +id, function(data){
+                $('#updateForm').attr('action', "{{ url('klien/update') }}"+"/"+id);
+                $('#prevUpdate').attr('src', "{{Storage::url('klien')}}" + "/" + data.img);
                 $('#deskripsiUpdate').html(data.deskripsi);
-                // CKEDITOR.instances.deskripsiUpdate.setData(data.deskripsi);
                 $('#editModal').modal('show');
             });
         }
@@ -175,7 +159,7 @@
                 if (result.value) { 
                     $.ajax({
                         type    : 'DELETE',
-                        url     : "{{url('galeri/delete')}}" +"/"+id,
+                        url     : "{{url('klien/delete')}}" +"/"+id,
                         data    : {_token   : "{{ csrf_token() }}"},
                         success: function (data) {
                             console.log(data)

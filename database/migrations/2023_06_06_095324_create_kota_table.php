@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestimoniTable extends Migration
+class CreateKotaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTestimoniTable extends Migration
      */
     public function up()
     {
-        Schema::create('testimoni', function (Blueprint $table) {
+        Schema::create('kota', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
-            $table->text("deskripsi");
-            $table->timestamps();
+            $table->string('nama_kota');
+            $table->unsignedBigInteger("provinsi_id");
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->timestamps();
+            $table->foreign('provinsi_id')->references('id')->on('provinsi');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateTestimoniTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('testimoni');
+        Schema::dropIfExists('kota');
     }
 }

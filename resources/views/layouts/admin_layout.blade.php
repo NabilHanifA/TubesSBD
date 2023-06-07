@@ -23,11 +23,13 @@
   <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
   <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
   <link href="{{asset('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{asset('assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script>
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/css/adminstyle.css')}}" rel="stylesheet">
 
@@ -45,9 +47,8 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{{asset('assets/img/logo.png')}}" alt="">
-        <span class="d-none d-lg-block">Admin</span>
+      <a href="{{url('admin')}}" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">Admin GTM</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -204,18 +205,44 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   <!-- Vendor JS Files -->
-  <script src="{{asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/chart.js/chart.umd.js')}}"></script>
-  <script src="{{asset('assets/vendor/echarts/echarts.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/quill/quill.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
-  <script src="{{asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{asset('assets/js/main.js')}}"></script>
+  {{-- <script src="{{asset('assets/js/main.js')}}"></script> --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
+  @if (session('success'))
+  <script>
+      Swal.fire(
+        '{{ session('success') }}',
+        'OK',
+        'success'
+      )
+  </script>
+  @endif
+  @if (session('error'))
+  <script>
+      Swal.fire(
+        "{{ session('error') }}",
+        'OK',
+        'error'
+      )
+  </script>
+  @endif
+  @if($errors->any())
+  <script>
+  Swal.fire({
+      icon: 'error',
+      title: 'Gagal',
+      html: '@foreach($errors->all() as $error) {!! $error."<br>" !!}@endforeach',
+  })
+  </script>
+  @endif
+  @stack('js')
 
 </body>
 

@@ -25,6 +25,14 @@
 
     <!-- Template Main CSS File -->
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@mladenilic/threesixty.js/dist/threesixty.js"></script> --}}
+	  <script src="{{asset('assets/js/360rotator.js')}}"></script>
+    
+    @stack('css')
 </head>
 
 <body>
@@ -132,27 +140,23 @@
   
         <div class="col-lg-8 mt-5 mt-lg-0">
   
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form action="{{ route('user.contact') }}" method="post" class="">
+            @csrf
             <div class="row">
               <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                <input type="text" name="nama_lengkap" class="form-control" id="name" placeholder="Nama Lengkap" required>
               </div>
               <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
               </div>
             </div>
             <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subjek" required>
             </div>
             <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              <textarea class="form-control" name="pesan" rows="5" placeholder="Pesan" required></textarea>
             </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
+            <div class="text-center"><button type="submit" class="mt-4 btn btn-warning">Send Message</button></div>
           </form>
   
         </div>
@@ -190,30 +194,17 @@
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Stasiun</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Store</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
           </div>
 
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Our Newsletter</h4>
             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
 
           </div>
 
@@ -242,7 +233,39 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('assets/js/main.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key={{env('API_KEY_GOOGLE_MAP')}}&libraries=&v=weekly&callback=Function.prototype"></script>
+  <script src="https://googlemaps.github.io/js-markerclustererplus/dist/index.min.js"></script>
 
+  @if (session('success'))
+  <script>
+      Swal.fire(
+        '{{ session('success') }}',
+        'OK',
+        'success'
+      )
+  </script>
+  @endif
+  @if (session('error'))
+  <script>
+      Swal.fire(
+        "{{ session('error') }}",
+        'OK',
+        'error'
+      )
+  </script>
+  @endif
+  @if($errors->any())
+  <script>
+  Swal.fire({
+      icon: 'error',
+      title: 'Gagal',
+      html: '@foreach($errors->all() as $error) {!! $error."<br>" !!}@endforeach',
+  })
+  </script>
+  @endif
+
+  @stack('js')
 </body>
 
 </html>

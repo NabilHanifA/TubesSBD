@@ -3,11 +3,11 @@
 
 @section('content')
 <div class="pagetitle">
-  <h1>Galeri</h1>
+  <h1>Kota</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{url('/admin')}}">Dashboard</a></li>
-      <li class="breadcrumb-item active">Galeri</li>
+      <li class="breadcrumb-item active">Kota</li>
     </ol>
   </nav>
 </div><!-- End Page Title -->
@@ -21,7 +21,7 @@
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
           <!--begin::Item-->
           <li class="breadcrumb-item text-muted">
-              <a class="btn btn-success text-white mt-3" onclick="$('#createModal').modal('show');"><i class="fas fa-plus mr-2"></i>Upload Gallery</a>
+              <a class="btn btn-success text-white mt-3" onclick="$('#createModal').modal('show');"><i class="fas fa-plus mr-2"></i>Tambah Data</a>
           </li>
           <!--end::Item-->
         </ul>
@@ -34,13 +34,11 @@
       <!--begin::Table container-->
       <div class="table-responsive">
         <!--begin::Table-->
-        <table id="table-galeri" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+        <table id="table-kota" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
           <thead>
             <tr>
               <th>No</th>
-              <th>Foto</th>
-              <th>Judul</th>
-              <th>Deskripsi</th>
+              <th>Nama Kota</th>
               <th style="width: 100px;">Aksi</th>
             </tr>
           </thead>
@@ -58,32 +56,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Unggah Foto Dokumentasi</h5>
+        <h5 class="modal-title" id="createModalLabel">Simpan Data</h5>
         <button type="button" class="btn" onclick="$('#createModal').modal('hide');" aria-label="Close"><i class="fas fa-times"></i></button>
       </div>
-      <form id="scopeForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.galeri.store') }}" class="form-horizontal">
+      <form id="scopeForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.kota.store') }}" class="form-horizontal">
         <div class="modal-body">
           @csrf
-          <div class="form-group">
-              <center><img width="100%" src="{{ asset('assets/img/default.png') }}" id="prev" alt="image"></center>
-              <br>
-              <center><input accept="image/*" type="file" class="form-control" name="img" id="image" required><center>
-            </div>
           <div class="form-group mt-6">
-              <label for="nama" class="col-sm-2 control-label">Judul:</label>
+              <label for="nama" class="col-sm-2 control-label">Nama Kota:</label>
               <div class="col-sm-12 mt-2">
-                  <input type="text" required class="form-control" id="judul" name="judul" placeholder="Masukan judul...">
-              </div>
-          </div>
-          <div class="form-group mt-6">
-              <label class="col control-label" for="deskripsi">Deskripsi (Opsional) :</label>
-              <div class="col-sm-12 mt-2">
-                  <textarea name="deskripsi" id="deskripsi" rows="5" class="form-control"></textarea>
+                  <input type="text" required class="form-control" id="nama_kota" name="nama_kota" placeholder="Masukan nama kota...">
               </div>
           </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Unggah</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
     </div>
@@ -95,7 +82,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Foto Dokumentasi</h5>
+        <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
         <button type="button" class="btn" onclick="$('#editModal').modal('hide');" aria-label="Close"><i class="fas fa-times"></i></button>
       </div>
       <form id="updateForm" name="scopeForm" enctype="multipart/form-data" method="POST" action="" class="form-horizontal">
@@ -103,20 +90,9 @@
               @method('PATCH')
               @csrf
               <div class="form-group">
-                  <center><img width="100%" src="" id="prevUpdate" alt="image"></center>
-                  <br>
-                  <center><input accept="image/*" type="file" name="img" id="imageUpdate" class="form-control"><center>
-                </div>
-              <div class="form-group">
-                  <label for="nama" class="col-sm-2 control-label">Judul:</label>
+                  <label for="nama" class="col-sm-2 control-label">Nama Kota:</label>
                   <div class="col-sm-12 mt-2">
-                      <input type="text" required class="form-control" id="judulUpdate" name="judul" placeholder="Masukan judul...">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col control-label" for="deskripsi">Deskripsi (Opsional) :</label>
-                  <div class="col-sm-12 mt-2">
-                      <textarea name="deskripsi" id="deskripsiUpdate" rows="5" class="form-control"></textarea>
+                      <input type="text" required class="form-control" id="nama_kota_update" name="nama_kota" placeholder="Masukan nama kota...">
                   </div>
               </div>
           </div>
@@ -133,31 +109,22 @@
     {{-- AJAX READ --}}
     <script>
         $(document).ready( function () {
-            var table = $('#table-galeri').DataTable({
+            var table = $('#table-kota').DataTable({
                 processing  : true,
                 serverSide  : true,
-                ajax        : "{{route('admin.galeri.ajax')}}",
+                ajax        : "{{route('admin.kota.ajax')}}",
                 columns     : [
                     {data   : 'DT_RowIndex', name: 'DT_RowIndex', orderlable: false, searchable: false},
-                    {data   : 'img', name: 'img', render: function(data){
-                        return `<a href="{{Storage::url('galeri/`+data+`')}}">`+`<img src="{{Storage::url('galeri/`+data+`')}}" width="100" class="prevImage" />`+`</a>`;
-                    }},
-                    {data   : 'judul', name: 'judul'},
-                    {data   : 'deskripsi', name: 'deskripsi', render: function(data){
-                        return (data == null) ? '-' : data.length > 100 ? data.substr(0,100)+'...' : data;
-                    }},
+                    {data   : 'nama_kota', name: 'nama_kota'},
                     {data   : 'aksi', name: 'aksi', className:'text-center', orderlable: false, searchable: false},
                 ],
             });
         });
 
         function editModal(id){
-            $.get("{{url('galeri/edit')}}" + "/" +id, function(data){
-                $('#updateForm').attr('action', "{{ url('galeri/update') }}"+"/"+id);
-                $('#prevUpdate').attr('src', "{{Storage::url('galeri')}}" + "/" + data.img);
-                $('#judulUpdate').val(data.judul);
-                $('#deskripsiUpdate').html(data.deskripsi);
-                // CKEDITOR.instances.deskripsiUpdate.setData(data.deskripsi);
+            $.get("{{url('kota/edit')}}" + "/" +id, function(data){
+                $('#updateForm').attr('action', "{{ url('kota/update') }}"+"/"+id);
+                $('#nama_kota_update').val(data.nama_kota);
                 $('#editModal').modal('show');
             });
         }
@@ -175,7 +142,7 @@
                 if (result.value) { 
                     $.ajax({
                         type    : 'DELETE',
-                        url     : "{{url('galeri/delete')}}" +"/"+id,
+                        url     : "{{url('kota/delete')}}" +"/"+id,
                         data    : {_token   : "{{ csrf_token() }}"},
                         success: function (data) {
                             console.log(data)
@@ -192,7 +159,7 @@
                                     html: data.message
                                 });
                             }
-                            $('#table-galeri').DataTable().ajax.reload();
+                            $('#table-kota').DataTable().ajax.reload();
                         },
                         error: function (data) {
                             console.log('Error:', data);
@@ -221,12 +188,12 @@
             }
         }
         CKEDITOR.replace('deskripsiUpdate',{
-            customConfig: "{{ asset('assets/ckconfig-galeri.js') }}"
+            customConfig: "{{ asset('assets/ckconfig-Kota.js') }}"
         });
         CKEDITOR.replace('deskripsi',{
-            customConfig: "{{ asset('assets/ckconfig-galeri.js') }}"
+            customConfig: "{{ asset('assets/ckconfig-Kota.js') }}"
         });
-        Fancybox.bind("#galeri-list a", {
+        Fancybox.bind("#Kota-list a", {
             on : {
                 ready : (fancybox) => {
                     console.log(`fancybox #${fancybox.id} is ready!`);

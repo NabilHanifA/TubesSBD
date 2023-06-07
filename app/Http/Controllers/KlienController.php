@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Galeri;
+use App\Models\Klien;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
-class GaleriController extends Controller
+class KlienController extends Controller
 {
     public function index(){
-        return view('admin.galeri');
+        return view('admin.klien');
     }
 
     public function ajax(){
-        $data = Galeri::latest()->get();
+        $data = Klien::latest()->get();
         return datatables()->of($data)
         ->addIndexColumn()
         ->addColumn('aksi', function($row){
@@ -35,7 +35,7 @@ class GaleriController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'judul' => 'required',
+            'deskripsi' => 'required',
             'img'   => 'required|image|max:2048'
         ]);
 
@@ -44,32 +44,32 @@ class GaleriController extends Controller
             return redirect()->back()->withErrors($fieldsWithErrorMessagesArray)->withInput();
         }
 
-        $input = Galeri::create($request->all());
+        $input = Klien::create($request->all());
         if($request->hasFile('img')){
             $file =  $request->file('img');
             $extention = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extention;
-            $file->storeAs('galeri/', $filename, 'public');
+            $file->storeAs('klien/', $filename, 'public');
             $input->img = $filename;
             $input->save();
         }
         if(!$validator->fails()){
-            return redirect()->route('admin.galeri')->with('success', 'Data berhasil disimpan');
+            return redirect()->route('admin.klien')->with('success', 'Data berhasil disimpan');
         }else{
-            return redirect()->route('admin.galeri')->withErrors('error',$validator);
+            return redirect()->route('admin.klien')->withErrors('error',$validator);
         }
     }
 
     public function edit(Request $request, $id){
-        $selectedItem = Galeri::find($id);
+        $selectedItem = Klien::find($id);
         return response()->json($selectedItem);
     }
 
     public function update(Request $request, $id){
-        $data = Galeri::find($id);
-        $former = "galeri/".$data['img'];
+        $data = Klien::find($id);
+        $former = "klien/".$data['img'];
         $validator = Validator::make($request->all(), [
-            'judul' => 'required',
+            'deskripsi' => 'required',
             'img'   => 'image|max:2048'
         ]);
 
@@ -83,17 +83,17 @@ class GaleriController extends Controller
             $file =  $request->file('img');
             $extention = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extention;
-            $file->storeAs('galeri', $filename, 'public');
+            $file->storeAs('klien', $filename, 'public');
             $data->img = $filename;
             $data->update();
             Storage::disk('public')->delete($former);
         }
-        return redirect()->route('admin.galeri')->with('success', 'Data berhasil diperbaharui');
+        return redirect()->route('admin.klien')->with('success', 'Data berhasil diperbaharui');
     }
 
     public function destroy($id){
-        $data = Galeri::find($id);
-        $img = "galeri/" . $data->img;
+        $data = Klien::find($id);
+        $img = "klien/" . $data->img;
         if($data->delete()){
             Storage::disk('public')->delete($img);
             return response()->json(['status' => 'success','message'=>'Data deleted successfully.']);

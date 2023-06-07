@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Galeri;
+use App\Models\KontakPesan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
-class GaleriController extends Controller
+class KontakPesanController extends Controller
 {
     public function index(){
-        return view('admin.galeri');
+        return view('admin.kontak-pesan');
     }
 
     public function ajax(){
-        $data = Galeri::latest()->get();
+        $data = KontakPesan::latest()->get();
+
         return datatables()->of($data)
         ->addIndexColumn()
+        ->addColumn('tanggal_formatted', function($row){
+            return \Carbon\Carbon::parse($row->created_at)->format('d-m-Y h:i:s');
+        })->rawColumns(['deskripsi'])
         ->addColumn('aksi', function($row){
             $btn =
             '<div class="d-flex justify-content-between">
@@ -30,43 +34,44 @@ class GaleriController extends Controller
             </div>';
 
             return $btn;
-        })->rawColumns(['aksi', 'deskripsi'])->toJson();
+        })->rawColumns(['aksi', 'deskripsi'])
+        ->toJson();
     }
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'judul' => 'required',
-            'img'   => 'required|image|max:2048'
+            'email' => 'required',
+            'nama_lengkap' => 'required',
+            'subject' => 'required',
+            'pesan' => 'required'
         ]);
+        $request->created_at = \Carbon\Carbon::now();
+        $request->updated_at = \Carbon\Carbon::now();
 
         if ($validator->fails()) {
             $fieldsWithErrorMessagesArray = $validator->messages()->get('*');
             return redirect()->back()->withErrors($fieldsWithErrorMessagesArray)->withInput();
         }
-
-        $input = Galeri::create($request->all());
-        if($request->hasFile('img')){
-            $file =  $request->file('img');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extention;
-            $file->storeAs('galeri/', $filename, 'public');
-            $input->img = $filename;
-            $input->save();
-        }
+        
+        $input = KontakPesan::create($request->all());
+        /* SQL : INSERT INTO kontak_pesan(`email`, `nama_lengkap`, `subject`, `pesan`, `created_at`, `updated_at`)
+                 VALUES('$request->email', '$request->nama_lengkap', '$request->subject', '$request->pesan','$request->created_at', '$request->updated_at' ) */
+        $input->save();
+        
         if(!$validator->fails()){
-            return redirect()->route('admin.galeri')->with('success', 'Data berhasil disimpan');
+            return redirect()->route('admin.messages')->with('success', 'Data berhasil disimpan');
         }else{
-            return redirect()->route('admin.galeri')->withErrors('error',$validator);
+            return redirect()->route('admin.messages')->withErrors('error',$validator);
         }
     }
 
     public function edit(Request $request, $id){
-        $selectedItem = Galeri::find($id);
+        $selectedItem = KontakPesan::find($id);
         return response()->json($selectedItem);
     }
 
     public function update(Request $request, $id){
-        $data = Galeri::find($id);
+        $data = KontakPesan::find($id);
         $former = "galeri/".$data['img'];
         $validator = Validator::make($request->all(), [
             'judul' => 'required',
@@ -79,23 +84,13 @@ class GaleriController extends Controller
         }
 
         $update = $data->update($request->all());
-        if($request->hasFile('img')){
-            $file =  $request->file('img');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extention;
-            $file->storeAs('galeri', $filename, 'public');
-            $data->img = $filename;
-            $data->update();
-            Storage::disk('public')->delete($former);
-        }
-        return redirect()->route('admin.galeri')->with('success', 'Data berhasil diperbaharui');
+        return redirect()->route('admin.messages')->with('success', 'Data berhasil diperbaharui');
     }
 
     public function destroy($id){
-        $data = Galeri::find($id);
-        $img = "galeri/" . $data->img;
+        $data = KontakPesan::find($id);
+        // SQL : DELETE FROM kontak_pesan WHERE id = $id;
         if($data->delete()){
-            Storage::disk('public')->delete($img);
             return response()->json(['status' => 'success','message'=>'Data deleted successfully.']);
         }else{
             return response()->json(['status'=>'error', 'message' => 'failed to delete Data']);
