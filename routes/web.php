@@ -123,7 +123,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/delete/{id}', [MerkController::class, 'destroy'])->name('admin.merk.destroy');
     });
 
-    Route::prefix('stasiun')->group(function(){
+    Route::prefix('admin/stasiun')->group(function(){
         Route::get('/', [StasiunController::class, 'index'])->name('admin.stasiun');
         Route::get('/ajax', [StasiunController::class, 'ajax'])->name('admin.stasiun.ajax');
         Route::get('/edit/{id}', [StasiunController::class, 'edit'])->name('admin.stasiun.edit');
